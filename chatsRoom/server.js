@@ -4,6 +4,8 @@ var path = require('path');
 var mime = require('mime');
 var catche = {};
 
+var chatServer = require('./lib/chat_server');
+
 
 
 function send404(response){
@@ -28,8 +30,9 @@ function sendFile(response,filePath,fileContents){
 
 
 function serveStatic(response,catche,absPath){
+// console.log(response);;
   if(catche[absPath]){
-    sendFile(reponse,absPath,catche[absPath])
+    sendFile(response,absPath,catche[absPath])
   }else{
     fs.exists(absPath,function(exists){
       if(exists){
@@ -63,6 +66,7 @@ var server = http.createServer(function(request,response){
 })
 
 
+chatServer.listen(server);
 server.listen(3000,function(){
   console.log('listen on 3000')
 })
